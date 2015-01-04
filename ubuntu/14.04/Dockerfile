@@ -3,7 +3,7 @@ MAINTAINER ccg <ccgdevops@googlegroups.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   python2.7 \
   python2.7-dev \
   python-pip
