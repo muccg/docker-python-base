@@ -5,6 +5,7 @@ RUN yum install -y \
   python27 \
   python27-devel \
   python27-pip
-RUN pip install -U pip
+RUN pip2.7 install -U pip
+RUN pip2.7 --version
 
 RUN yum clean all
