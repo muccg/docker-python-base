@@ -13,3 +13,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install -U pip
 
 RUN env --unset=DEBIAN_FRONTEND
+
+CMD /bin/sh

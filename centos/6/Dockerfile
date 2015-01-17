@@ -10,3 +10,4 @@ RUN yum install -y \
 
 RUN pip2.7 install -U pip && pip2.7 --version
 
+CMD /bin/sh
