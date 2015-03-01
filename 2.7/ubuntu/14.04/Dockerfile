@@ -1,10 +1,11 @@
 #
-FROM muccg/base:ubuntu14.04
+FROM muccg/ubuntu14.04-base:latest
 MAINTAINER ccg <ccgdevops@googlegroups.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  build-essential \
   python2.7 \
   python2.7-dev \
   python-pip \
