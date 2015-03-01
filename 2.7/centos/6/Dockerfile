@@ -1,7 +1,11 @@
-FROM muccg/base:centos6
+FROM muccg/centos6-base:latest
 MAINTAINER ccg <ccgdevops@googlegroups.com>
 
 RUN yum install -y \
+  gcc \
+  gcc-c++ \
+  make \
+  openssl-devel \
   python27 \
   python27-devel \
   python27-pip \
