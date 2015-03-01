@@ -1,11 +1,10 @@
-FROM muccg/base:debian8
+FROM muccg/debian8-base:latest
 MAINTAINER ccg <ccgdevops@googlegroups.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  netcat \
-  net-tools \
+  build-essential \
   python2.7 \
   python2.7-dev \
   python-setuptools \
