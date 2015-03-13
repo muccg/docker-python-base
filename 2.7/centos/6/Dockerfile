@@ -1,5 +1,5 @@
 FROM muccg/centos6-base:latest
-MAINTAINER ccg <ccgdevops@googlegroups.com>
+MAINTAINER ccg <devops@ccg.murdoch.edu.au>
 
 RUN yum install -y \
   gcc \
