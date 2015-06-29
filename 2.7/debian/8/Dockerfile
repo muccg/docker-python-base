@@ -5,6 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
+  libffi-dev \
+  libssl-dev \
   python2.7 \
   python2.7-dev \
   python-setuptools \
@@ -14,6 +16,8 @@ RUN easy_install pip \
   && pip install virtualenv \
   && pip --version \ 
   && virtualenv --version
+
+RUN pip install -U requests[security]
 
 RUN env --unset=DEBIAN_FRONTEND
 
