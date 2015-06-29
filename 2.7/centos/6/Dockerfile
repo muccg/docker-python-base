@@ -5,6 +5,7 @@ RUN yum install -y \
   gcc \
   gcc-c++ \
   make \
+  libffi-devel \
   openssl-devel \
   python27 \
   python27-devel \
@@ -13,6 +14,7 @@ RUN yum install -y \
   && yum clean all
 
 RUN pip2.7 install -U pip && pip2.7 --version
+RUN pip install -U requests[security]
 
 ENV BUILD_HOST_FILE /data/build_host.txt
 ENV YUM_CONF /etc/yum.conf
