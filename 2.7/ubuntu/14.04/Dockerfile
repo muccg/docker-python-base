@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pip install -U pip
-RUN pip install -U requests[security]
+# Attempt to avoid https://github.com/pypa/pip/issues/2753
+#RUN pip install -U requests[security]
 
 RUN env --unset=DEBIAN_FRONTEND
 

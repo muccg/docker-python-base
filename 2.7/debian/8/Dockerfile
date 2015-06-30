@@ -17,7 +17,8 @@ RUN easy_install pip \
   && pip --version \ 
   && virtualenv --version
 
-RUN pip install -U requests[security]
+# Attempt to avoid https://github.com/pypa/pip/issues/2753
+#RUN pip install -U requests[security]
 
 RUN env --unset=DEBIAN_FRONTEND
 

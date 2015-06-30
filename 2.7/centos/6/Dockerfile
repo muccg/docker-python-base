@@ -14,7 +14,9 @@ RUN yum install -y \
   && yum clean all
 
 RUN pip2.7 install -U pip && pip2.7 --version
-RUN pip install -U requests[security]
+
+# Attempt to avoid https://github.com/pypa/pip/issues/2753
+#RUN pip install -U requests[security]
 
 ENV BUILD_HOST_FILE /data/build_host.txt
 ENV YUM_CONF /etc/yum.conf
