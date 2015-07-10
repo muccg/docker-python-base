@@ -1,6 +1,6 @@
 # Image tag muccg/python-base:debian8-3.4
 FROM muccg/debian8-base:latest
-MAINTAINER ccg <devops@ccg.murdoch.edu.au>
+MAINTAINER https://github.com/muccg
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -12,7 +12,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN env --unset=DEBIAN_FRONTEND
 
+RUN pip3 install pip --upgrade \
+  && pip3 install virtualenv --upgrade \
+  && pip --version \
+  && virtualenv --version
+
 ENV PIP_CONF_DIR /root/.config/pip
+ENV BUILD_HOST_FILE /data/build_host.txt
+ENV APT_PROXY_CONF /etc/apt/apt.conf.d/30proxy
 
 CMD /bin/sh
 
