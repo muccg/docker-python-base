@@ -24,7 +24,7 @@ do
         do
             distrover=`basename ${distroverdir}`
 
-            image="${REPO}/python-base:${distro}${version}-${pythonver}"
+            image="${REPO}/python-base:${distro}${distrover}-${pythonver}"
             #echo "################################################################### ${image}"
         
             ## warm up cache for CI
