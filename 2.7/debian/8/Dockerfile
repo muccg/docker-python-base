@@ -26,6 +26,10 @@ ENV BUILD_HOST_FILE /data/build_host.txt
 ENV APT_PROXY_CONF /etc/apt/apt.conf.d/30proxy
 ENV PIP_CONF_DIR /root/.config/pip
 
+# don't let apt and pip config leak into base images
+RUN rm -f $APT_PROXY_CONF
+RUN rm -f $PIP_CONF_DIR
+
 CMD /bin/sh
 
 # Determine build host
