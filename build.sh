@@ -16,6 +16,17 @@ PIP_TRUSTED_HOST=${DOCKER_HOST}
 
 : ${DOCKER_BUILD_OPTIONS:="--pull=true --build-arg PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} --build-arg PIP_INDEX_URL=${PIP_INDEX_URL} --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg http_proxy=${HTTP_PROXY}"}
 
+
+ci_docker_login() {
+    if [ -n "$bamboo_DOCKER_USERNAME" ] && [ -n "$bamboo_DOCKER_EMAIL" ] && [ -n "$bamboo_DOCKER_PASSWORD" ]; then
+        docker login  -e "${bamboo_DOCKER_EMAIL}" -u ${bamboo_DOCKER_USERNAME} --password="${bamboo_DOCKER_PASSWORD}"
+    else
+        echo "Docker vars not set, not logging in to docker registry"
+    fi
+}
+
+ci_docker_login
+
 # build dirs, top level is python version
 for pythondir in */
 do
