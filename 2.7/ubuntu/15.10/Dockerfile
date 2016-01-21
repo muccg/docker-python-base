@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   python-setuptools \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN easy_install-2.7 pip \
+RUN easy_install pip \
   && NO_PROXY=$PIP_TRUSTED_HOST pip --trusted-host $PIP_TRUSTED_HOST install -i $PIP_INDEX_URL --upgrade \
   virtualenv \
   && pip --version
