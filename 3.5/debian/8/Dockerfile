@@ -1,4 +1,5 @@
-FROM python:2.7-slim
+# python:3.5 is jessie, there is no jessie tag
+FROM python:3.5-slim
 MAINTAINER https://github.com/muccg
 
 RUN mkdir /app

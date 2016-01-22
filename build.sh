@@ -11,10 +11,8 @@ DATE=`date +%Y.%m.%d`
 
 DOCKER_HOST=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
 HTTP_PROXY="http://${DOCKER_HOST}:3128"
-PIP_INDEX_URL="http://${DOCKER_HOST}:3141/root/pypi/+simple/"
-PIP_TRUSTED_HOST=${DOCKER_HOST}
 
-: ${DOCKER_BUILD_OPTIONS:="--pull=true --build-arg PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} --build-arg PIP_INDEX_URL=${PIP_INDEX_URL} --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg http_proxy=${HTTP_PROXY}"}
+: ${DOCKER_BUILD_OPTIONS:="--pull=true --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg http_proxy=${HTTP_PROXY}"}
 
 
 ci_docker_login() {
@@ -56,7 +54,6 @@ do
             ## for logging in CI
             docker inspect ${image}-${DATE}
 
-            # push
             docker push ${image}-${DATE}
             docker push ${image}
             set +x
