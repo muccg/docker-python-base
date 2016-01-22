@@ -39,6 +39,11 @@ RUN set -ex \
 RUN pip install --upgrade --no-cache-dir \
     virtualenv
 
+# Allow us to find default route and hence docker host
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  iproute2 \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 RUN mkdir /app
 
 RUN addgroup --gid 1000 ccg-user \
