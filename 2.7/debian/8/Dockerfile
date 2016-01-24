@@ -3,7 +3,7 @@ MAINTAINER https://github.com/muccg
 
 ARG PIP_OPTS="--upgrade --no-cache-dir"
 
-RUN pip $PIP_OPTS install virtualenv
+RUN pip install $PIP_OPTS virtualenv
 
 RUN mkdir /app
 
