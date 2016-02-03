@@ -2,6 +2,8 @@
 FROM buildpack-deps:trusty
 MAINTAINER https://github.com/muccg
 
+ENV VIRTUAL_ENV /env
+
 # remove several traces of debian python
 RUN apt-get purge -y python.*
 
@@ -36,8 +38,12 @@ RUN set -ex \
 	&& rm -rf /usr/src/python
 
 # install "virtualenv", since the vast majority of users of this image will want it
-RUN pip install --upgrade --no-cache-dir \
-    virtualenv
+# create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
+RUN pip install --upgrade --no-cache-dir virtualenv \
+    && virtualenv $VIRTUAL_ENV \
+    && $VIRTUAL_ENV/bin/pip install --upgrade --no-cache-dir pip==$PYTHON_PIP_VERSION
+
+ENV PATH $VIRTUAL_ENV/bin:$PATH
 
 RUN mkdir /app
 
