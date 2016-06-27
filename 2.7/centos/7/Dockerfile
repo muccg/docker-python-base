@@ -1,8 +1,14 @@
-FROM muccg/centos7-base:latest
+FROM centos:centos7
 MAINTAINER https://github.com/muccg
 
-ARG PIP_INDEX_URL=https://pypi.python.org/simple/
-ARG PIP_TRUSTED_HOST=127.0.0.1
+ENV VIRTUAL_ENV /env
+ENV PYTHON_PIP_VERSION 8.1.2
+
+RUN yum install -y \
+    epel-release \
+    http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-14.ius.centos7.   noarch.rpm \
+    http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm \
+    && yum clean all
 
 RUN yum install -y \
   gcc \
@@ -16,8 +22,17 @@ RUN yum install -y \
   python-virtualenv \
   && yum clean all
 
-RUN NO_PROXY=$PIP_TRUSTED_HOST pip2.7 --trusted-host $PIP_TRUSTED_HOST install -i $PIP_INDEX_URL --upgrade \
-  pip \
-  && pip2.7 --version
+# install "virtualenv", since the vast majority of users of this image will want it
+# create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
+RUN pip install --upgrade --no-cache-dir virtualenv \
+    && virtualenv $VIRTUAL_ENV \
+    && $VIRTUAL_ENV/bin/pip install --upgrade --no-cache-dir pip==$PYTHON_PIP_VERSION
+              
+ENV PATH $VIRTUAL_ENV/bin:$PATH
 
-CMD /bin/sh
+RUN groupadd --gid 1000 ccg-user \
+    && useradd --home-dir /data --no-create-home --system --uid 1000 --gid 1000 ccg-user \
+    && mkdir /data \
+    && chown ccg-user:ccg-user /data
+
+CMD ["python2]

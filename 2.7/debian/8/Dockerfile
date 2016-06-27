@@ -2,6 +2,7 @@ FROM python:2.7-slim
 MAINTAINER https://github.com/muccg
 
 ENV VIRTUAL_ENV /env
+ENV PYTHON_PIP_VERSION 8.1.2
 
 # create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
 RUN pip install $PIP_OPTS virtualenv \
