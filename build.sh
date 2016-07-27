@@ -3,27 +3,14 @@
 # Script to build images
 #
 
-# break on error
+: ${PROJECT_NAME:='python-base'}
+. ./lib.sh
+
 set -e
 
-REPO="muccg"
-DATE=`date +%Y.%m.%d`
+docker_options
 
-DOCKER_HOST=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
-HTTP_PROXY="http://${DOCKER_HOST}:3128"
-
-: ${DOCKER_BUILD_OPTIONS:="--pull=true --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg http_proxy=${HTTP_PROXY}"}
-
-
-ci_docker_login() {
-    if [ -n "$bamboo_DOCKER_USERNAME" ] && [ -n "$bamboo_DOCKER_EMAIL" ] && [ -n "$bamboo_DOCKER_PASSWORD" ]; then
-        docker login  -e "${bamboo_DOCKER_EMAIL}" -u ${bamboo_DOCKER_USERNAME} --password="${bamboo_DOCKER_PASSWORD}"
-    else
-        echo "Docker vars not set, not logging in to docker registry"
-    fi
-}
-
-ci_docker_login
+info "${DOCKER_BUILD_OPTS}"
 
 # build dirs, top level is python version
 for pythondir in */
@@ -40,22 +27,25 @@ do
         do
             distrover=`basename ${distroverdir}`
 
-            image="${REPO}/python-base:${distro}${distrover}-${pythonver}"
+            image="${DOCKER_IMAGE}:${distro}${distrover}-${pythonver}"
             echo "################################################################### ${image}"
-        
+
             ## warm up cache for CI
             docker pull ${image} || true
 
             ## build
             set -x
-            docker build ${DOCKER_BUILD_OPTIONS} -t ${image}-${DATE} ${distroverdir}
-            docker build ${DOCKER_BUILD_OPTIONS} -t ${image} ${distroverdir}
+            docker build ${DOCKER_BUILD_OPTS} -t ${image}-${DATE} ${distroverdir}
+            docker build ${DOCKER_BUILD_OPTS} -t ${image} ${distroverdir}
 
             ## for logging in CI
             docker inspect ${image}-${DATE}
 
-            docker push ${image}-${DATE}
-            docker push ${image}
+            if [ ${DOCKER_USE_HUB} = "1" ]; then
+                _ci_docker_login
+                docker push ${image}-${DATE}
+                docker push ${image}
+            fi
             set +x
         done
     done
