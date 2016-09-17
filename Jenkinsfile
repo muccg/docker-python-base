@@ -1,6 +1,12 @@
 #!groovy
 
 node {
+    properties([
+        pipelineTriggers([
+            pollSCM('@weekly')
+        ])
+    ])
+
     stage 'Checkout'
         checkout scm
 
