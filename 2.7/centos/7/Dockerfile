@@ -8,6 +8,8 @@ ENV VIRTUAL_ENV /env
 ENV PYTHON_PIP_VERSION 9.0.1
 ENV PIP_NO_CACHE_DIR="off"
 
+RUN env
+
 RUN yum install -y \
     epel-release \
     http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-14.ius.centos7.noarch.rpm \
