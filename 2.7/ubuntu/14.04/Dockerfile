@@ -8,7 +8,7 @@ ARG ARG_PIP_TRUSTED_HOST="127.0.0.1"
 ENV VIRTUAL_ENV /env
 ENV PIP_NO_CACHE_DIR="off"
 ENV PYTHON_PIP_VERSION 9.0.1
-ENV PYTHON_VERSION 2.7.11
+ENV PYTHON_VERSION 2.7.12
 
 # remove several traces of debian python
 RUN apt-get purge -y python.*
