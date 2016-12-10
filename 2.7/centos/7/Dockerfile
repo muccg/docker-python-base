@@ -12,7 +12,7 @@ RUN env
 RUN echo "http_proxy=${http_proxy}"
 RUN echo "http_proxy=${http_proxy}" >> /etc/yum.conf
 
-RUN yum install -y \
+RUN yum update && yum install -y \
     epel-release \
     http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-14.ius.centos7.noarch.rpm \
     http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-3.noarch.rpm \
