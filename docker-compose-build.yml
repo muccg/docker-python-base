@@ -16,3 +16,9 @@ services:
       file: docker-compose-build.yml
       service: dev
     image: muccg/${CCG_PROJECT}:${CCG_PATH_TAG}
+
+  prod-date:
+    extends:
+      file: docker-compose-build.yml
+      service: dev
+    image: muccg/${CCG_PROJECT}:${CCG_PATH_TAG}-${CCG_BUILD_DATE}

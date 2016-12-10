@@ -13,6 +13,7 @@ node {
         sh('''
             ./develop.sh sanity
             ./develop.sh recurse build prod
+            ./develop.sh recurse build prod-date
         ''')
     }
 
@@ -25,6 +26,7 @@ node {
                 sh("""
                     docker login -u "${env.DOCKER_USERNAME}" --password="${env.DOCKER_PASSWORD}"
                     ./develop.sh recurse push prod
+                    ./develop.sh recurse push prod-date
                 """)
             }
         }
