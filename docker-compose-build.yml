@@ -1,0 +1,18 @@
+version: '2'
+services:
+
+  dev:
+    build:
+      context: ${CCG_CONTEXT}
+      dockerfile: Dockerfile
+      args:
+        ARG_PIP_INDEX_URL: ${PIP_INDEX_URL}
+        ARG_PIP_TRUSTED_HOST: ${PIP_TRUSTED_HOST}
+        http_proxy:
+    image: muccg/${CCG_PROJECT}:${GIT_BRANCH}-${CCG_PATH_TAG}
+
+  prod:
+    extends:
+      file: docker-compose-build.yml
+      service: dev
+    image: muccg/${CCG_PROJECT}:${CCG_PATH_TAG}

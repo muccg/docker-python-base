@@ -1,5 +1,4 @@
-# python:3.4 is jessie, there is no jessie tag
-FROM python:3.4-slim
+FROM python:3.5-alpine
 MAINTAINER https://github.com/muccg/
 
 ARG ARG_PIP_INDEX_URL="https://pypi.python.org/simple"
@@ -17,7 +16,7 @@ ENV PATH $VIRTUAL_ENV/bin:$PATH
 
 RUN mkdir /app
 
-RUN addgroup --gid 1000 ccg-user \
-  && adduser --disabled-password --home /data --no-create-home --system -q --uid 1000 --ingroup ccg-user ccg-user \
-  && mkdir /data \
-  && chown ccg-user:ccg-user /data
+RUN addgroup -g 1000 ccg-user \
+   && adduser -D -h /data -H -S -u 1000 -G ccg-user ccg-user \
+   && mkdir /data \
+   && chown ccg-user:ccg-user /data
