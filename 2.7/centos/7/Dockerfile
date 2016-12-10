@@ -9,6 +9,8 @@ ENV PYTHON_PIP_VERSION 9.0.1
 ENV PIP_NO_CACHE_DIR="off"
 
 RUN env
+RUN echo "http_proxy=${http_proxy}"
+RUN echo "http_proxy=${http_proxy}" >> /etc/yum.conf
 
 RUN yum install -y \
     epel-release \
