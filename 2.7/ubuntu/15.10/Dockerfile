@@ -2,9 +2,6 @@
 FROM buildpack-deps:wily
 MAINTAINER https://github.com/muccg/
 
-ARG ARG_PIP_INDEX_URL="https://pypi.python.org/simple"
-ARG ARG_PIP_TRUSTED_HOST="127.0.0.1"
-
 ENV VIRTUAL_ENV /env
 ENV PYTHON_PIP_VERSION 9.0.1
 ENV PIP_NO_CACHE_DIR="off"
@@ -31,7 +28,7 @@ RUN set -ex \
 	&& make install \
 	&& ldconfig \
 	&& curl -fSL 'https://bootstrap.pypa.io/get-pip.py' | python2 \
-	&& NO_PROXY=${PIP_TRUSTED_HOST} pip install --no-cache-dir --upgrade pip==$PYTHON_PIP_VERSION \
+	&& pip install --no-cache-dir --upgrade pip==$PYTHON_PIP_VERSION \
 	&& find /usr/local \
 		\( -type d -a -name test -o -name tests \) \
 		-o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
@@ -40,9 +37,9 @@ RUN set -ex \
 
 # install "virtualenv", since the vast majority of users of this image will want it
 # create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
-RUN NO_PROXY=${PIP_TRUSTED_HOST} pip install --upgrade --no-cache-dir virtualenv \
+RUN pip install --upgrade virtualenv \
     && virtualenv $VIRTUAL_ENV \
-    && $VIRTUAL_ENV/bin/pip install --upgrade --no-cache-dir pip==$PYTHON_PIP_VERSION
+    && $VIRTUAL_ENV/bin/pip install --upgrade pip==$PYTHON_PIP_VERSION
 
 ENV PATH $VIRTUAL_ENV/bin:$PATH
 
