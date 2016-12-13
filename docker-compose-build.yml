@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  dev:
+    build:
+      context: ${CCG_CONTEXT}
+      dockerfile: Dockerfile
+    image: muccg/${CCG_PROJECT}:${GIT_BRANCH}-${CCG_PATH_TAG}
+
+  prod:
+    extends:
+      file: docker-compose-build.yml
+      service: dev
+    image: muccg/${CCG_PROJECT}:${CCG_PATH_TAG}
+
+  prod-date:
+    extends:
+      file: docker-compose-build.yml
+      service: dev
+    image: muccg/${CCG_PROJECT}:${CCG_PATH_TAG}-${CCG_BUILD_DATE}

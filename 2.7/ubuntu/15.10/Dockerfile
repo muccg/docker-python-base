@@ -1,8 +1,11 @@
 # Derived from https://github.com/docker-library/python
 FROM buildpack-deps:wily
-MAINTAINER https://github.com/muccg
+MAINTAINER https://github.com/muccg/
 
 ENV VIRTUAL_ENV /env
+ENV PYTHON_PIP_VERSION 9.0.1
+ENV PIP_NO_CACHE_DIR="off"
+ENV PYTHON_VERSION 2.7.12
 
 # remove several traces of debian python
 RUN apt-get purge -y python.*
@@ -10,11 +13,6 @@ RUN apt-get purge -y python.*
 # gpg: key 18ADD4FF: public key "Benjamin Peterson <benjamin@python.org>" imported
 # gpgkeys: key C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF can't be retrieved
 ENV GPG_KEY C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF
-
-ENV PYTHON_VERSION 2.7.11
-
-# if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 8.1.2
 
 RUN set -ex \
 	#&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
@@ -39,9 +37,9 @@ RUN set -ex \
 
 # install "virtualenv", since the vast majority of users of this image will want it
 # create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
-RUN pip install --upgrade --no-cache-dir virtualenv \
+RUN pip install --upgrade virtualenv \
     && virtualenv $VIRTUAL_ENV \
-    && $VIRTUAL_ENV/bin/pip install --upgrade --no-cache-dir pip==$PYTHON_PIP_VERSION
+    && $VIRTUAL_ENV/bin/pip install --upgrade pip==$PYTHON_PIP_VERSION
 
 ENV PATH $VIRTUAL_ENV/bin:$PATH
 
