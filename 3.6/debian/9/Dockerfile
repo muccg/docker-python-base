@@ -121,7 +121,7 @@ RUN set -ex; \
 
 
 # create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
-RUN pyvenv $VIRTUAL_ENV \
+RUN python3 -m venv $VIRTUAL_ENV \
     && $VIRTUAL_ENV/bin/pip install --upgrade pip==$PYTHON_PIP_VERSION
 
 ENV PATH $VIRTUAL_ENV/bin:$PATH
