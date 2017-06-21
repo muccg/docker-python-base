@@ -5,13 +5,13 @@ ENV VIRTUAL_ENV /env
 ENV PYTHON_PIP_VERSION 9.0.1
 ENV PIP_NO_CACHE_DIR="off"
 
-RUN yum update && yum install -y \
+RUN yum -y update && yum -y install \
     epel-release \
     http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-1.0-14.ius.centos7.noarch.rpm \
     http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-3.noarch.rpm \
     && yum clean all
 
-RUN yum install -y \
+RUN yum -y install \
   gcc \
   gcc-c++ \
   make \
