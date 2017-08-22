@@ -1,14 +1,12 @@
 # Derived from https://github.com/docker-library/python
 #   and from https://raw.githubusercontent.com/muccg/docker-python-base/master/2.7/ubuntu/15.10/Dockerfile
-
 FROM buildpack-deps:zesty
-
-MAINTAINER https://github.com/muccg/
+LABEL maintainer "https://github.com/muccg/"
 
 ENV VIRTUAL_ENV /env
 ENV PYTHON_PIP_VERSION 9.0.1
 ENV PIP_NO_CACHE_DIR="off"
-ENV PYTHON_VERSION 2.7.12
+ENV PYTHON_VERSION 2.7.13
 
 # remove several traces of debian python
 RUN apt-get purge -y python.*

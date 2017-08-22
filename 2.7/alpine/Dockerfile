@@ -1,5 +1,5 @@
 FROM python:2.7-alpine
-MAINTAINER https://github.com/muccg/
+LABEL maintainer "https://github.com/muccg/"
 
 ENV VIRTUAL_ENV /env
 ENV PYTHON_PIP_VERSION 9.0.1

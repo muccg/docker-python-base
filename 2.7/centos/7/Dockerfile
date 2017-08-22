@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER https://github.com/muccg/
+LABEL maintainer "https://github.com/muccg/"
 
 ENV VIRTUAL_ENV /env
 ENV PYTHON_PIP_VERSION 9.0.1
