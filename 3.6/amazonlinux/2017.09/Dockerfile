@@ -16,6 +16,9 @@ RUN yum -y install \
 
 # install "virtualenv", since the vast majority of users of this image will want it
 # create a virtual env in $VIRTUAL_ENV and ensure it respects pip version
+#
+# using the legacy virtualenv package as python3 -m venv is broken in Amazon Linux / Centos
+# https://bugzilla.redhat.com/show_bug.cgi?id=1464570
 RUN pip-3.6 install --upgrade virtualenv \
     && virtualenv $VIRTUAL_ENV \
     && $VIRTUAL_ENV/bin/pip install --upgrade pip==$PYTHON_PIP_VERSION
