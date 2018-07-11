@@ -2,7 +2,7 @@ FROM python:3.7-slim
 LABEL maintainer "https://github.com/muccg/"
 
 ENV VIRTUAL_ENV /env
-ENV PYTHON_PIP_VERSION 9.0.1
+ENV PYTHON_PIP_VERSION 10.0.1
 ENV PIP_NO_CACHE_DIR="off"
 ENV PATH $VIRTUAL_ENV/bin:$PATH
 
