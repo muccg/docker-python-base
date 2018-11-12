@@ -1,0 +1,21 @@
+sudo: required
+matrix:
+  fast_finish: true
+services:
+- docker
+before_install:
+- docker pull muccg/ccg-composer
+script:
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- chmod 755 ~/.docker
+- chmod 644 ~/.docker/config.json
+- export "GIT_BRANCH=$TRAVIS_BRANCH"
+- test x"$TRAVIS_PULL_REQUEST_BRANCH" != x"" && export "GIT_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH" || echo "This build is not a PR."
+- export "BRANCH_NAME=$GIT_BRANCH"
+- ./travis-build.sh
+
+env:
+  global:
+    - DOCKER_USERNAME: ccgbuildbot
+    - secure: "Lswv31rfPlgVB9+lidd34Az05PH4dTWuiYEa+9rnijKxloPWjTkrw5dW8uJn3UNZX3yhegashiwBg40kkz+nEy/3KHcGncmuqymfprrDXpJhGhnqkngj5JC+OUGSJFQ7kPOFB+o3bUQbEg0Nzc5rDKbz6s2LKobKP4ZkgHtvlWgvsbxTjQJiF5qDrPQQjQFMzpfrXV23Sszgh2c7/S+3jopseTCfNddqi74UQYU5mNIuR4T7583l+EU4l8OcLuB+gSBNB8pvUK4rNLObiK/4Xnh5eeHxH8mO/xANeBsv3d4fBAde/xOAa+QnChWatBtKT/C9rd2d3eeBqf3MsgDrfacJtsgGAN1eFTPIVfYOIEp/Thb4XvI5elrVLDktYf6dKJsk7g6Sq3Lv10b0pNbTSFJR5jhtiL1t3BN8+wCxasllGOweY4OSB4cTNcxG/fIyr/LHStsUGjaSJ10WcQ79TpPVK/1RLkr9KhEbL96w+dPVlcTuYv3zG7TFmeKenoqgZ0R+xljPiTlLeJ5lpObovGepy1E3FLVJLe1ZgR3uCBZFEz2+k0RMmy/D+WDzKbHcY6U4tMSLtkP4OajwnaHNGhAi3vAz2N4dqf+lt+B5oS9op956UPPfVTD+gL1ue9cutTdfQZckg/YXOPokPAPrRvej5ROKdMkaVCwMnlXoli0="
+
